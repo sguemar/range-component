@@ -2,6 +2,7 @@
   "name": "range-component",
   "version": "0.1.0",
   "description": "A React component for selecting ranges of values.",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
