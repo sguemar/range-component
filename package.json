@@ -1,0 +1,21 @@
+{
+  "name": "range-component",
+  "version": "0.1.0",
+  "description": "A React component for selecting ranges of values.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sguemar/range-component.git"
+  },
+  "keywords": [
+    "React",
+    "Next.js",
+    "UI",
+    "Range"
+  ],
+  "author": "Samuel Guerra Marrero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sguemar/range-component/issues"
+  },
+  "homepage": "https://github.com/sguemar/range-component#readme"
+}
