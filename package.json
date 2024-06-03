@@ -2,6 +2,12 @@
   "name": "range-component",
   "version": "0.1.0",
   "description": "A React component for selecting ranges of values.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sguemar/range-component.git"
