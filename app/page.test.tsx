@@ -1,12 +1,11 @@
-import { expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Home from './page'
 
-test('Home', () => {
-  render(<Home />)
+describe('Home', () => {
+  it('should render the range component', () => {
+    render(<Home />)
 
-  const paragraph = screen.getByRole('paragraph')
-
-  expect(paragraph).toBeDefined()
-  expect(paragraph.textContent).toBe("Here will be the Range component")
+    expect(screen.getByTestId('range-container')).toBeDefined()
+  })
 })
