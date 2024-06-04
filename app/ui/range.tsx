@@ -1,3 +1,3 @@
 export const Range = () => {
-  return <div>Range component</div>
+  return <div data-testid="range-container"></div>
 }
