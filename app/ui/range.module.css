@@ -1,4 +1,13 @@
 .rangeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.minValue {
+  margin-right: 5px;
+}
+
+.rangeLine {
   width: 500px;
   height: 10px;
   background-color: black;
