@@ -1,3 +1,5 @@
+import styles from './range.module.css'
+
 export const Range = () => {
-  return <div data-testid="range-container"></div>
+  return <div className={styles.rangeContainer} data-testid="range-container"></div>
 }
