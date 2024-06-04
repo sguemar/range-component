@@ -6,6 +6,6 @@ describe('Range component', () => {
   it('should render the Range component succesfully', () => {
     render(<Range />)
 
-    expect(screen.getByText('Range component')).toBeDefined()
+    expect(screen.getByTestId('range-container')).toBeDefined()
   })
 })
