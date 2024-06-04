@@ -1,3 +1,5 @@
+import './global.css'
+
 export const metadata = {
   title: 'Range Component',
   description: 'A React component for selecting ranges of values.',
