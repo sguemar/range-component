@@ -1,3 +1,5 @@
+import { Range } from './ui/range'
+
 export default function Home() {
-  return <p>Here will be the Range component</p>
+  return <Range />
 }
