@@ -1,4 +1,4 @@
-import { RangeProps } from '../lib/definitions'
+import { RangeProps } from '@/lib/definitions'
 
 import styles from './range.module.css'
 

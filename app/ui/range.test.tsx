@@ -1,7 +1,8 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Range } from './range'
-import { RangeProps } from '../lib/definitions'
+
+import { Range } from '@/ui/range'
+import { RangeProps } from '@/lib/definitions'
 
 describe('Range component', () => {
 
