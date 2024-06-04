@@ -7,6 +7,7 @@ export const Range = (props: RangeProps) => {
     <div className={styles.rangeContainer} data-testid="range-container">
       <label className={styles.minValue}>{props.min}€</label>
       <div className={styles.rangeLine}> </div>
+      <label className={styles.maxValue}>{props.max}€</label>
     </div>
   )
 }
