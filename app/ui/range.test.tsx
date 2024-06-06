@@ -42,5 +42,13 @@ describe('Range component', () => {
 
       expect(screen.getByTestId('min-bullet')).toBeDefined()
     })
+
+    it('should be placed at the start position on the first render', () => {
+      setup({})
+
+      const minBullet = screen.getByTestId('min-bullet')
+
+      expect(minBullet.style.left).toBe('0%')
+    })
   })
 })
