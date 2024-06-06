@@ -35,4 +35,12 @@ describe('Range component', () => {
 
     expect(screen.getByText(`${defaultProps.max}€`)).toBeDefined()
   })
+
+  describe('Min bullet', () => {
+    it('should render a bullet element to select the min value', () => {
+      setup({})
+
+      expect(screen.getByTestId('min-bullet')).toBeDefined()
+    })
+  })
 })
