@@ -4,16 +4,29 @@
 }
 
 .minValue {
-  margin-right: 5px;
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+.minBullet {
+  background-color: black;
+  border-radius: 10px;
+  height: 20px;
+  position: absolute;
+  width: 20px;
+  top: -5px;
+  transform: translateX(-50%);
 }
 
 .rangeLine {
-  width: 500px;
-  height: 10px;
   background-color: black;
   border-radius: 5px;
+  height: 10px;
+  position: relative;
+  width: 500px;
 }
 
 .maxValue {
-  margin-left: 5px;
+  margin-left: 20px;
+  font-size: 30px;
 }
