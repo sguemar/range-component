@@ -18,6 +18,14 @@
   transform: translateX(-50%);
 }
 
+.minBullet:hover {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  top: -10px;
+  cursor: grab;
+}
+
 .rangeLine {
   background-color: black;
   border-radius: 5px;
