@@ -18,7 +18,7 @@ describe('Range component', () => {
     render(<Range {...defaultProps} {...props} />)
   }
 
-  it('should render the Range component succesfully', () => {
+  it('should render the Range component successfully', () => {
     setup({})
 
     expect(screen.getByTestId('range-container')).toBeDefined()
