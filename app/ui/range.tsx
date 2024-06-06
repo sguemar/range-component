@@ -29,10 +29,11 @@ export const Range = (props: RangeProps) => {
       const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
       setMinBulletPercentage(bulletPercentage)
 
-      const newMinValue = (props.max * bulletPercentage) / 100
+      const newMinValue =
+        ((props.max - props.min) * bulletPercentage) / 100 + props.min
       setCurrentMinValue(Number(newMinValue.toFixed(2)))
     },
-    [props.max],
+    [props.max, props.min],
   )
 
   useEffect(() => {
