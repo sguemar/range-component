@@ -3,6 +3,7 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 import { RangeProps } from '@/lib/definitions'
+import { limitBulletPosition } from '@/lib/utils'
 
 import styles from './range.module.css'
 
@@ -17,9 +18,12 @@ export const Range = (props: RangeProps) => {
 
   const handleMouseMove = useCallback((e) => {
     const { left, right } = rangeLineRef.current.getBoundingClientRect()
-    if (e.clientX > right || e.clientX < left) return
-
-    const bulletPosition = ((e.clientX - left) * 100) / 500
+    const rangeLineLength = right - left
+    const limitedBulletPosition = limitBulletPosition(
+      e.clientX - left,
+      rangeLineLength,
+    )
+    const bulletPosition = (limitedBulletPosition * 100) / rangeLineLength
     setMinBulletXPosition(bulletPosition)
   }, [])
 
