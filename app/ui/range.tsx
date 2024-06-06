@@ -8,7 +8,7 @@ import { limitBulletPosition } from '@/lib/utils'
 import styles from './range.module.css'
 
 export const Range = (props: RangeProps) => {
-  const [minBulletXPosition, setMinBulletXPosition] = useState(0)
+  const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
   const [isMouseDown, setIsMouseDown] = useState(false)
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
@@ -23,8 +23,8 @@ export const Range = (props: RangeProps) => {
       e.clientX - left,
       rangeLineLength,
     )
-    const bulletPosition = (limitedBulletPosition * 100) / rangeLineLength
-    setMinBulletXPosition(bulletPosition)
+    const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+    setMinBulletPercentage(bulletPercentage)
   }, [])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const Range = (props: RangeProps) => {
         <div
           data-testid="min-bullet"
           style={{
-            left: `${minBulletXPosition}%`,
+            left: `${minBulletXPercentage}%`,
           }}
           className={`${styles.minBullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={handleMouseDown}
