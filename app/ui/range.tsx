@@ -9,23 +9,31 @@ import styles from './range.module.css'
 
 export const Range = (props: RangeProps) => {
   const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
+  const [currentMinValue, setCurrentMinValue] = useState(props.min)
   const [isMouseDown, setIsMouseDown] = useState(false)
+
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
   const stopDragging = () => {
     setIsMouseDown(false)
   }
 
-  const handleMouseMove = useCallback((e) => {
-    const { left, right } = rangeLineRef.current.getBoundingClientRect()
-    const rangeLineLength = right - left
-    const limitedBulletPosition = limitBulletPosition(
-      e.clientX - left,
-      rangeLineLength,
-    )
-    const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
-    setMinBulletPercentage(bulletPercentage)
-  }, [])
+  const handleMouseMove = useCallback(
+    (e) => {
+      const { left, right } = rangeLineRef.current.getBoundingClientRect()
+      const rangeLineLength = right - left
+      const limitedBulletPosition = limitBulletPosition(
+        e.clientX - left,
+        rangeLineLength,
+      )
+      const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+      setMinBulletPercentage(bulletPercentage)
+
+      const newMinValue = (props.max * bulletPercentage) / 100
+      setCurrentMinValue(Number(newMinValue.toFixed(2)))
+    },
+    [props.max],
+  )
 
   useEffect(() => {
     if (isMouseDown) {
@@ -47,7 +55,7 @@ export const Range = (props: RangeProps) => {
 
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
-      <label className={styles.minValue}>{props.min}€</label>
+      <label className={styles.minValue}>{currentMinValue}€</label>
       <div ref={rangeLineRef} className={styles.rangeLine}>
         <div
           data-testid="min-bullet"
