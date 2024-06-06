@@ -26,6 +26,10 @@
   cursor: grab;
 }
 
+.minBullet.grabbing {
+  cursor: grabbing;
+}
+
 .rangeLine {
   background-color: black;
   border-radius: 5px;

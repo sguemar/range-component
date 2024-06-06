@@ -50,7 +50,7 @@ export const Range = (props: RangeProps) => {
           style={{
             left: `${minBulletXPosition}%`,
           }}
-          className={styles.minBullet}
+          className={`${styles.minBullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={handleMouseDown}
         ></div>
       </div>
