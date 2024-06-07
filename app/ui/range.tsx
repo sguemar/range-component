@@ -104,7 +104,7 @@ export const Range = (props: RangeProps) => {
           style={{
             left: `${maxBulletXPercentage}%`,
           }}
-          className={styles.bullet}
+          className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={(e) => handleMouseDown(e, Bullets.Max)}
         ></div>
       </div>
