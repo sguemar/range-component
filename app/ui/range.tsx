@@ -65,7 +65,7 @@ export const Range = (props: RangeProps) => {
           style={{
             left: `${minBulletXPercentage}%`,
           }}
-          className={`${styles.minBullet} ${isMouseDown ? styles.grabbing : ''}`}
+          className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={handleMouseDown}
         ></div>
         <div
@@ -73,6 +73,7 @@ export const Range = (props: RangeProps) => {
           style={{
             left: `${maxBulletXPercentage}%`,
           }}
+          className={styles.bullet}
         ></div>
       </div>
       <label className={styles.maxValue}>{props.max}€</label>
