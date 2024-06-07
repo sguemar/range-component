@@ -25,6 +25,15 @@ export const Range = (props: RangeProps) => {
     rangeLineLength: number,
   ) => (bulletPosition * 100) / rangeLineLength
 
+  const getNewValue = useCallback(
+    (bulletPercentage: number) => {
+      const newValue =
+        ((props.max - props.min) * bulletPercentage) / 100 + props.min
+      return Number(newValue.toFixed(2))
+    },
+    [props.max, props.min],
+  )
+
   const stopDragging = () => {
     setIsMouseDown(false)
     setSelectedBullet(null)
@@ -50,9 +59,8 @@ export const Range = (props: RangeProps) => {
         )
         setMinBulletPercentage(bulletPercentage)
 
-        const newMinValue =
-          ((props.max - props.min) * bulletPercentage) / 100 + props.min
-        setCurrentMinValue(Number(newMinValue.toFixed(2)))
+        const newMinValue = getNewValue(bulletPercentage)
+        setCurrentMinValue(newMinValue)
       }
 
       if (selectedBullet === Bullets.Max) {
@@ -68,18 +76,11 @@ export const Range = (props: RangeProps) => {
         )
         setMaxBulletPercentage(bulletPercentage)
 
-        const newMaxValue =
-          ((props.max - props.min) * bulletPercentage) / 100 + props.min
-        setCurrentMaxValue(Number(newMaxValue.toFixed(2)))
+        const newMaxValue = getNewValue(bulletPercentage)
+        setCurrentMaxValue(newMaxValue)
       }
     },
-    [
-      maxBulletXPercentage,
-      minBulletXPercentage,
-      props.max,
-      props.min,
-      selectedBullet,
-    ],
+    [maxBulletXPercentage, minBulletXPercentage, selectedBullet, getNewValue],
   )
 
   useEffect(() => {
