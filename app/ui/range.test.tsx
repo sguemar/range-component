@@ -37,7 +37,7 @@ describe('Range component', () => {
   })
 
   describe('Min bullet', () => {
-    it('should render a bullet element to select the min value', () => {
+    it('should render a bullet element to select the minimum value', () => {
       setup({})
 
       expect(screen.getByTestId('min-bullet')).toBeDefined()
@@ -49,6 +49,22 @@ describe('Range component', () => {
       const minBullet = screen.getByTestId('min-bullet')
 
       expect(minBullet.style.left).toBe('0%')
+    })
+  })
+
+  describe('Max bullet', () => {
+    it('should render a bullet element to select the maximum value', () => {
+      setup({})
+
+      expect(screen.getByTestId('max-bullet')).toBeDefined()
+    })
+
+    it('should be placed at the end position on the first render', () => {
+      setup({})
+
+      const max = screen.getByTestId('max-bullet')
+
+      expect(max.style.left).toBe('100%')
     })
   })
 })
