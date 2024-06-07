@@ -9,6 +9,7 @@ import styles from './range.module.css'
 
 export const Range = (props: RangeProps) => {
   const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
+  const [maxBulletXPercentage, setMaxBulletPercentage] = useState(100)
   const [currentMinValue, setCurrentMinValue] = useState(props.min)
   const [isMouseDown, setIsMouseDown] = useState(false)
 
@@ -66,6 +67,12 @@ export const Range = (props: RangeProps) => {
           }}
           className={`${styles.minBullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={handleMouseDown}
+        ></div>
+        <div
+          data-testid="max-bullet"
+          style={{
+            left: `${maxBulletXPercentage}%`,
+          }}
         ></div>
       </div>
       <label className={styles.maxValue}>{props.max}€</label>
