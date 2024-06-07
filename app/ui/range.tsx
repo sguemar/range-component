@@ -2,40 +2,70 @@
 
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 
-import { RangeProps } from '@/lib/definitions'
+import { Bullets } from '@/lib/constants'
 import { limitBulletPosition } from '@/lib/utils'
+import { RangeProps } from '@/lib/definitions'
 
 import styles from '@/ui/range.module.css'
 
 export const Range = (props: RangeProps) => {
   const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
   const [maxBulletXPercentage, setMaxBulletPercentage] = useState(100)
+
   const [currentMinValue, setCurrentMinValue] = useState(props.min)
+  const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
+
   const [isMouseDown, setIsMouseDown] = useState(false)
+  const [selectedBullet, setSelectedBullet] = useState<Bullets>(null)
 
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
   const stopDragging = () => {
     setIsMouseDown(false)
+    setSelectedBullet(null)
   }
 
   const handleMouseMove = useCallback(
     (e) => {
       const { left, right } = rangeLineRef.current.getBoundingClientRect()
       const rangeLineLength = right - left
-      const limitedBulletPosition = limitBulletPosition({
-        current: e.clientX - left,
-        max: rangeLineLength,
-        min: 0,
-      })
-      const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
-      setMinBulletPercentage(bulletPercentage)
 
-      const newMinValue =
-        ((props.max - props.min) * bulletPercentage) / 100 + props.min
-      setCurrentMinValue(Number(newMinValue.toFixed(2)))
+      let limitedBulletPosition = 0
+      if (selectedBullet === Bullets.Min) {
+        limitedBulletPosition = limitBulletPosition({
+          current: e.clientX - left,
+          max: (maxBulletXPercentage * rangeLineLength) / 100 - 1,
+          min: 0,
+        })
+        const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+        setMinBulletPercentage(bulletPercentage)
+
+        const newMinValue =
+          ((props.max - props.min) * bulletPercentage) / 100 + props.min
+        setCurrentMinValue(Number(newMinValue.toFixed(2)))
+      }
+
+      if (selectedBullet === Bullets.Max) {
+        limitedBulletPosition = limitBulletPosition({
+          current: e.clientX - left,
+          max: rangeLineLength,
+          min: (minBulletXPercentage * rangeLineLength) / 100 + 1,
+        })
+        const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+        setMaxBulletPercentage(bulletPercentage)
+
+        const newMaxValue =
+          ((props.max - props.min) * bulletPercentage) / 100 + props.min
+        setCurrentMaxValue(Number(newMaxValue.toFixed(2)))
+      }
     },
-    [props.max, props.min],
+    [
+      maxBulletXPercentage,
+      minBulletXPercentage,
+      props.max,
+      props.min,
+      selectedBullet,
+    ],
   )
 
   useEffect(() => {
@@ -51,9 +81,10 @@ export const Range = (props: RangeProps) => {
     }
   }, [handleMouseMove, isMouseDown])
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>, bullet: Bullets) => {
     e.preventDefault()
     setIsMouseDown(true)
+    setSelectedBullet(bullet)
   }
 
   return (
@@ -66,7 +97,7 @@ export const Range = (props: RangeProps) => {
             left: `${minBulletXPercentage}%`,
           }}
           className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
-          onMouseDown={handleMouseDown}
+          onMouseDown={(e) => handleMouseDown(e, Bullets.Min)}
         ></div>
         <div
           data-testid="max-bullet"
@@ -74,9 +105,10 @@ export const Range = (props: RangeProps) => {
             left: `${maxBulletXPercentage}%`,
           }}
           className={styles.bullet}
+          onMouseDown={(e) => handleMouseDown(e, Bullets.Max)}
         ></div>
       </div>
-      <label className={styles.maxValue}>{props.max}€</label>
+      <label className={styles.maxValue}>{currentMaxValue}€</label>
     </div>
   )
 }
