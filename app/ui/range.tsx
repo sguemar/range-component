@@ -23,7 +23,7 @@ export const Range = (props: RangeProps) => {
       const { left, right } = rangeLineRef.current.getBoundingClientRect()
       const rangeLineLength = right - left
       const limitedBulletPosition = limitBulletPosition(
-        e.clientX - left,
+        e.pageX - left,
         rangeLineLength,
       )
       const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
