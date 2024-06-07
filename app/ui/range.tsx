@@ -20,6 +20,11 @@ export const Range = (props: RangeProps) => {
 
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
+  const getPositionPercentage = (
+    bulletPosition: number,
+    rangeLineLength: number,
+  ) => (bulletPosition * 100) / rangeLineLength
+
   const stopDragging = () => {
     setIsMouseDown(false)
     setSelectedBullet(null)
@@ -31,13 +36,18 @@ export const Range = (props: RangeProps) => {
       const rangeLineLength = right - left
 
       let limitedBulletPosition = 0
+
       if (selectedBullet === Bullets.Min) {
         limitedBulletPosition = limitBulletPosition({
           current: e.clientX - left,
           max: (maxBulletXPercentage * rangeLineLength) / 100 - 1,
           min: 0,
         })
-        const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+
+        const bulletPercentage = getPositionPercentage(
+          limitedBulletPosition,
+          rangeLineLength,
+        )
         setMinBulletPercentage(bulletPercentage)
 
         const newMinValue =
@@ -51,7 +61,11 @@ export const Range = (props: RangeProps) => {
           max: rangeLineLength,
           min: (minBulletXPercentage * rangeLineLength) / 100 + 1,
         })
-        const bulletPercentage = (limitedBulletPosition * 100) / rangeLineLength
+
+        const bulletPercentage = getPositionPercentage(
+          limitedBulletPosition,
+          rangeLineLength,
+        )
         setMaxBulletPercentage(bulletPercentage)
 
         const newMaxValue =
