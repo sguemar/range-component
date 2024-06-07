@@ -1,8 +1,11 @@
-export const limitBulletPosition = (
-  currentXPosition: number,
-  maximumXPosition: number,
-) => {
-  if (currentXPosition < 0) return 0
-  if (currentXPosition > maximumXPosition) return maximumXPosition
-  return currentXPosition
+import { LimitBulletPositionParams } from '@/lib/definitions'
+
+export const limitBulletPosition = ({
+  current,
+  max,
+  min,
+}: LimitBulletPositionParams) => {
+  if (current < min) return min
+  if (current > max) return max
+  return current
 }
