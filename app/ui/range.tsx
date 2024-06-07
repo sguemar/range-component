@@ -9,8 +9,8 @@ import { RangeProps } from '@/lib/definitions'
 import styles from '@/ui/range.module.css'
 
 export const Range = (props: RangeProps) => {
-  const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
-  const [maxBulletXPercentage, setMaxBulletPercentage] = useState(100)
+  const [minBulletPercentage, setMinBulletPercentage] = useState(0)
+  const [maxBulletPercentage, setMaxBulletPercentage] = useState(100)
 
   const [currentMinValue, setCurrentMinValue] = useState(props.min)
   const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
@@ -49,7 +49,7 @@ export const Range = (props: RangeProps) => {
       if (selectedBullet === Bullets.Min) {
         limitedBulletPosition = limitBulletPosition({
           current: e.clientX - left,
-          max: (maxBulletXPercentage * rangeLineLength) / 100 - 1,
+          max: (maxBulletPercentage * rangeLineLength) / 100 - 1,
           min: 0,
         })
 
@@ -67,7 +67,7 @@ export const Range = (props: RangeProps) => {
         limitedBulletPosition = limitBulletPosition({
           current: e.clientX - left,
           max: rangeLineLength,
-          min: (minBulletXPercentage * rangeLineLength) / 100 + 1,
+          min: (minBulletPercentage * rangeLineLength) / 100 + 1,
         })
 
         const bulletPercentage = getPositionPercentage(
@@ -80,7 +80,7 @@ export const Range = (props: RangeProps) => {
         setCurrentMaxValue(newMaxValue)
       }
     },
-    [maxBulletXPercentage, minBulletXPercentage, selectedBullet, getNewValue],
+    [maxBulletPercentage, minBulletPercentage, selectedBullet, getNewValue],
   )
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const Range = (props: RangeProps) => {
         <div
           data-testid="min-bullet"
           style={{
-            left: `${minBulletXPercentage}%`,
+            left: `${minBulletPercentage}%`,
           }}
           className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={(e) => handleMouseDown(e, Bullets.Min)}
@@ -117,7 +117,7 @@ export const Range = (props: RangeProps) => {
         <div
           data-testid="max-bullet"
           style={{
-            left: `${maxBulletXPercentage}%`,
+            left: `${maxBulletPercentage}%`,
           }}
           className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
           onMouseDown={(e) => handleMouseDown(e, Bullets.Max)}
