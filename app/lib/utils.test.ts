@@ -4,58 +4,103 @@ import { limitBulletPosition } from '@/lib/utils'
 
 describe('Utils', () => {
   describe('limitBulletPosition', () => {
-    const maximumXPosition = 500
+    it('should receive the correct params and returns a number', () => {
+      const minimumPosition = 0
+      const maximumPosition = 500
+      const currentPosition = 40
 
-    it('should receive the current pointer X position, the maximum possible position and returns a number', () => {
-      const currentXPosition = 40
-      const bulletPosition = limitBulletPosition(
-        currentXPosition,
-        maximumXPosition,
-      )
+      const bulletPosition = limitBulletPosition({
+        current: currentPosition,
+        max: maximumPosition,
+        min: minimumPosition,
+      })
 
       expect(typeof bulletPosition).toBe('number')
     })
 
-    it('should return 0 if the current X position is lower than 0', () => {
-      const currentXPosition = -1
-      const bulletPosition = limitBulletPosition(
-        currentXPosition,
-        maximumXPosition,
-      )
+    describe('Return minimum position', () => {
+      it('should return 0 value if the current position is negative', () => {
+        const minimumPosition = 0
+        const maximumPosition = 500
+        const currentPosition = -1
 
-      expect(bulletPosition).toBe(0)
+        const bulletPosition = limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        })
+
+        expect(bulletPosition).toBe(minimumPosition)
+      })
+
+      it('should return 30 if the current position is lower', () => {
+        const minimumPosition = 30
+        const maximumPosition = 500
+        const currentPosition = 10
+
+        const bulletPosition = limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        })
+
+        expect(bulletPosition).toBe(minimumPosition)
+      })
     })
 
-    it('should return the maximum possible position if the current X position is greater than the maximum value', () => {
-      const currentXPosition = 501
-      const bulletPosition = limitBulletPosition(
-        currentXPosition,
-        maximumXPosition,
-      )
+    it('should return the maximum position if the current position is greater', () => {
+      const minimumPosition = 0
+      const maximumPosition = 500
+      const currentPosition = 501
 
-      expect(bulletPosition).toBe(maximumXPosition)
+      const bulletPosition = limitBulletPosition({
+        current: currentPosition,
+        max: maximumPosition,
+        min: minimumPosition,
+      })
+
+      expect(bulletPosition).toBe(maximumPosition)
     })
 
-    it('should return the current X position if it is between 0 and the maximum value', () => {
-      let currentXPosition = 0
-      expect(limitBulletPosition(currentXPosition, maximumXPosition)).toBe(
-        currentXPosition,
-      )
+    it('should return the current position if it is between the minimum and the maximum value', () => {
+      const minimumPosition = 0
+      const maximumPosition = 500
+      let currentPosition = 0
 
-      currentXPosition = 47
-      expect(limitBulletPosition(currentXPosition, maximumXPosition)).toBe(
-        currentXPosition,
-      )
+      expect(
+        limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        }),
+      ).toBe(currentPosition)
 
-      currentXPosition = 359
-      expect(limitBulletPosition(currentXPosition, maximumXPosition)).toBe(
-        currentXPosition,
-      )
+      currentPosition = 47
+      expect(
+        limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        }),
+      ).toBe(currentPosition)
 
-      currentXPosition = 500
-      expect(limitBulletPosition(currentXPosition, maximumXPosition)).toBe(
-        currentXPosition,
-      )
+      currentPosition = 359
+      expect(
+        limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        }),
+      ).toBe(currentPosition)
+
+      currentPosition = 500
+      expect(
+        limitBulletPosition({
+          current: currentPosition,
+          max: maximumPosition,
+          min: minimumPosition,
+        }),
+      ).toBe(currentPosition)
     })
   })
 })
