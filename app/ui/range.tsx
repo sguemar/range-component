@@ -5,7 +5,7 @@ import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { RangeProps } from '@/lib/definitions'
 import { limitBulletPosition } from '@/lib/utils'
 
-import styles from './range.module.css'
+import styles from '@/ui/range.module.css'
 
 export const Range = (props: RangeProps) => {
   const [minBulletXPercentage, setMinBulletPercentage] = useState(0)
