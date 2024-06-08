@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, test } from 'vitest'
 
 import { Range } from '@/ui/range'
@@ -58,5 +58,23 @@ describe('Range component', () => {
     const minBullet = bullets[1]
 
     expect(minBullet.style.left).toBe('100%')
+  })
+
+  it('should hide the min value label and show an input when clicking on the label', () => {
+    setup({})
+
+    const minValueText = `${defaultProps.min}€`
+
+    expect(screen.queryByRole('spinbutton')).toBeNull()
+
+    const minLabel = screen.getByText(minValueText)
+
+    fireEvent.click(minLabel)
+
+    expect(screen.queryByText(minValueText)).toBeNull()
+
+    const minValueInput = screen.getByRole('spinbutton')
+
+    expect(minValueInput).toBeDefined()
   })
 })
