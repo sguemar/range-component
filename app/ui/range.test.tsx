@@ -190,5 +190,26 @@ describe('Range component', () => {
       minLabel = screen.getByText(minValueText)
       expect(minLabel).toBeDefined()
     })
+
+    it('should update the min bullet after the manual modification', () => {
+      setup({})
+
+      let minValueText = `${defaultProps.min}€`
+      let minLabel = screen.getByText(minValueText)
+
+      fireEvent.click(minLabel)
+
+      let minValueInput = screen.getByRole('spinbutton')
+
+      const newValue = 3
+      fireEvent.change(minValueInput, { target: { value: newValue } })
+
+      fireEvent.blur(minValueInput)
+
+      const bullets = screen.getAllByTestId('bullet')
+      const minBullet = bullets[0]
+
+      expect(minBullet.style.left).toBe('50%')
+    })
   })
 })
