@@ -36,6 +36,9 @@ export const Range = (props: RangeProps) => {
     return right - left
   }, [rangeLineBounds])
 
+  const getPercentageByValue = (newValue: number) =>
+    ((newValue - props.min) * 100) / (props.max - props.min)
+
   const getMinBulletMaxPosition = () => {
     return (maxBulletPercentage * rangeLineLength) / 100 - 1
   }
@@ -77,6 +80,7 @@ export const Range = (props: RangeProps) => {
   const handleMinValueBlur = () => {
     setIsEditingMinValue(false)
     updateMinBulletValue(minInputValue)
+    setMinBulletPercentage(getPercentageByValue(minInputValue))
   }
 
   return (
