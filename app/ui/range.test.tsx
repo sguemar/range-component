@@ -82,6 +82,27 @@ describe('Range component', () => {
       expect(minBullet.style.left).toBe('50%')
     })
 
+    it('should update the max bullet after the manual modification', () => {
+      setup({})
+
+      let maxValueText = `${defaultProps.max}€`
+      let maxLabel = screen.getByText(maxValueText)
+
+      fireEvent.click(maxLabel)
+
+      let maxValueInput = screen.getByRole('spinbutton')
+
+      const newValue = 3
+      fireEvent.change(maxValueInput, { target: { value: newValue } })
+
+      fireEvent.blur(maxValueInput)
+
+      const bullets = screen.getAllByTestId('bullet')
+      const maxBullet = bullets[1]
+
+      expect(maxBullet.style.left).toBe('50%')
+    })
+
     it('should not update the min bullet if the current input value is invalid', () => {
       setup({})
 
@@ -101,6 +122,27 @@ describe('Range component', () => {
       const minBullet = bullets[0]
 
       expect(minBullet.style.left).toBe('0%')
+    })
+
+    it('should not update the max bullet if the current input value is invalid', () => {
+      setup({})
+
+      let maxValueText = `${defaultProps.max}€`
+      let maxLabel = screen.getByText(maxValueText)
+
+      fireEvent.click(maxLabel)
+
+      let maxValueInput = screen.getByRole('spinbutton')
+
+      const newValue = 6
+      fireEvent.change(maxValueInput, { target: { value: newValue } })
+
+      fireEvent.blur(maxValueInput)
+
+      const bullets = screen.getAllByTestId('bullet')
+      const maxBullet = bullets[0]
+
+      expect(maxBullet.style.left).toBe('0%')
     })
   })
 })
