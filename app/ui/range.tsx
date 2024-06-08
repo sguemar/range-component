@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Bullet } from '@/ui/bullet'
 import { RangeLineBounds, RangeProps } from '@/lib/definitions'
@@ -15,6 +15,9 @@ export const Range = (props: RangeProps) => {
   const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
 
   const [isEditingMinValue, setIsEditingMinValue] = useState(false)
+
+  const [isInvalidMinValue, setIsInvalidMinValue] = useState(false)
+  const [minInputValue, setMinInputValue] = useState(currentMinValue)
 
   const [rangeLineBounds, setRangeLineBounds] = useState<RangeLineBounds>({
     left: 0,
@@ -61,6 +64,21 @@ export const Range = (props: RangeProps) => {
     setIsEditingMinValue(true)
   }
 
+  const handleMinValueChange = (e: FormEvent<HTMLInputElement>) => {
+    const newValue = Number(e.currentTarget.value)
+    setMinInputValue(newValue)
+    if (newValue > currentMaxValue || newValue < props.min) {
+      setIsInvalidMinValue(true)
+      return
+    }
+    setIsInvalidMinValue(false)
+  }
+
+  const handleMinValueBlur = () => {
+    setIsEditingMinValue(false)
+    updateMinBulletValue(minInputValue)
+  }
+
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
       {!isEditingMinValue ? (
@@ -71,7 +89,15 @@ export const Range = (props: RangeProps) => {
           {currentMinValue}€
         </label>
       ) : (
-        <input type="number" value={currentMinValue} />
+        <div>
+          <input
+            onBlur={handleMinValueBlur}
+            onChange={handleMinValueChange}
+            type="number"
+            value={minInputValue}
+          />
+          {isInvalidMinValue && <p>Invalid value</p>}
+        </div>
       )}
       <div ref={rangeLineRef} className={styles.rangeLine}>
         <Bullet
