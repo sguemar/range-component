@@ -1,8 +1,9 @@
 'use client'
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Bullet } from '@/ui/bullet'
+import { EditableValue } from '@/ui/editable-value'
 import { RangeLineBounds, RangeProps } from '@/lib/definitions'
 
 import styles from '@/ui/range.module.css'
@@ -14,9 +15,6 @@ export const Range = (props: RangeProps) => {
   const [currentMinValue, setCurrentMinValue] = useState(props.min)
   const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
 
-  const [isEditingMinValue, setIsEditingMinValue] = useState(false)
-
-  const [isInvalidMinValue, setIsInvalidMinValue] = useState(false)
   const [minInputValue, setMinInputValue] = useState(currentMinValue)
 
   const [rangeLineBounds, setRangeLineBounds] = useState<RangeLineBounds>({
@@ -36,9 +34,6 @@ export const Range = (props: RangeProps) => {
     return right - left
   }, [rangeLineBounds])
 
-  const getPercentageByValue = (newValue: number) =>
-    ((newValue - props.min) * 100) / (props.max - props.min)
-
   const getMinBulletMaxPosition = () => {
     return (maxBulletPercentage * rangeLineLength) / 100 - 1
   }
@@ -50,6 +45,14 @@ export const Range = (props: RangeProps) => {
   const updateMinBulletValue = (newValue: number) => {
     setCurrentMinValue(newValue)
     setMinInputValue(newValue)
+  }
+
+  const updateMinInputValue = (newValue: number) => {
+    setMinInputValue(newValue)
+  }
+
+  const resetMinInputValue = () => {
+    setMinInputValue(currentMinValue)
   }
 
   const getMaxBulletMinPosition = () => {
@@ -64,52 +67,19 @@ export const Range = (props: RangeProps) => {
     setCurrentMaxValue(newValue)
   }
 
-  const handleClickMinLabel = () => {
-    setIsEditingMinValue(true)
-  }
-
-  const handleMinValueChange = (e: FormEvent<HTMLInputElement>) => {
-    const newValue = Number(e.currentTarget.value)
-    setMinInputValue(newValue)
-    if (newValue > currentMaxValue || newValue < props.min) {
-      setIsInvalidMinValue(true)
-      return
-    }
-    setIsInvalidMinValue(false)
-  }
-
-  const handleMinValueBlur = () => {
-    setIsEditingMinValue(false)
-
-    if (isInvalidMinValue) {
-      setIsInvalidMinValue(false)
-      setMinInputValue(currentMinValue)
-    } else {
-      updateMinBulletValue(Number(minInputValue.toFixed(2)))
-      setMinBulletPercentage(getPercentageByValue(minInputValue))
-    }
-  }
-
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
-      {!isEditingMinValue ? (
-        <label
-          className={`${styles.minValue} ${styles.label}`}
-          onClick={handleClickMinLabel}
-        >
-          {currentMinValue}€
-        </label>
-      ) : (
-        <div>
-          <input
-            onBlur={handleMinValueBlur}
-            onChange={handleMinValueChange}
-            type="number"
-            value={minInputValue}
-          />
-          {isInvalidMinValue && <p>Invalid value</p>}
-        </div>
-      )}
+      <EditableValue
+        currentValue={minInputValue}
+        maximumValue={props.max}
+        maxLimitValue={currentMaxValue}
+        minimumValue={props.min}
+        minLimitValue={props.min}
+        resetInputValue={resetMinInputValue}
+        updateBulletPercentage={updateMinBulletPercentage}
+        updateBulletValue={updateMinBulletValue}
+        updateCurrentInputValue={updateMinInputValue}
+      />
       <div ref={rangeLineRef} className={styles.rangeLine}>
         <Bullet
           currentPercentage={minBulletPercentage}
