@@ -71,7 +71,7 @@ export const Range = (props: RangeProps) => {
           {currentMinValue}€
         </label>
       ) : (
-        <input type="number" />
+        <input type="number" value={currentMinValue} />
       )}
       <div ref={rangeLineRef} className={styles.rangeLine}>
         <Bullet
