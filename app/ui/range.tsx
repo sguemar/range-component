@@ -49,6 +49,7 @@ export const Range = (props: RangeProps) => {
 
   const updateMinBulletValue = (newValue: number) => {
     setCurrentMinValue(newValue)
+    setMinInputValue(newValue)
   }
 
   const getMaxBulletMinPosition = () => {
