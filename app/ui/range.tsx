@@ -80,8 +80,13 @@ export const Range = (props: RangeProps) => {
 
   const handleMinValueBlur = () => {
     setIsEditingMinValue(false)
-    updateMinBulletValue(minInputValue)
-    setMinBulletPercentage(getPercentageByValue(minInputValue))
+    if (isInvalidMinValue) {
+      setIsInvalidMinValue(false)
+      setMinInputValue(currentMinValue)
+    } else {
+      updateMinBulletValue(minInputValue)
+      setMinBulletPercentage(getPercentageByValue(minInputValue))
+    }
   }
 
   return (
