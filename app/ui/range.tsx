@@ -16,6 +16,7 @@ export const Range = (props: RangeProps) => {
   const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
 
   const [minInputValue, setMinInputValue] = useState(currentMinValue)
+  const [maxInputValue, setMaxInputValue] = useState(currentMaxValue)
 
   const [rangeLineBounds, setRangeLineBounds] = useState<RangeLineBounds>({
     left: 0,
@@ -65,6 +66,15 @@ export const Range = (props: RangeProps) => {
 
   const updateMaxBulletValue = (newValue: number) => {
     setCurrentMaxValue(newValue)
+    setMaxInputValue(newValue)
+  }
+
+  const updateMaxInputValue = (newValue: number) => {
+    setMaxInputValue(newValue)
+  }
+
+  const resetMaxInputValue = () => {
+    setMaxInputValue(currentMaxValue)
   }
 
   return (
@@ -105,7 +115,17 @@ export const Range = (props: RangeProps) => {
           updateValue={updateMaxBulletValue}
         />
       </div>
-      <label className={styles.maxValue}>{currentMaxValue}€</label>
+      <EditableValue
+        currentValue={maxInputValue}
+        maximumValue={props.max}
+        maxLimitValue={props.max}
+        minimumValue={props.min}
+        minLimitValue={currentMinValue}
+        resetInputValue={resetMaxInputValue}
+        updateBulletPercentage={updateMaxBulletPercentage}
+        updateBulletValue={updateMaxBulletValue}
+        updateCurrentInputValue={updateMaxInputValue}
+      />
     </div>
   )
 }
