@@ -2,3 +2,7 @@
   cursor: pointer;
   font-size: 30px;
 }
+
+.justifySelfRight {
+  justify-self: right;
+}

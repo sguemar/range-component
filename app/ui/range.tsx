@@ -80,6 +80,7 @@ export const Range = (props: RangeProps) => {
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
       <EditableValue
+        justifySelfRight
         currentValue={minInputValue}
         maximumValue={props.max}
         maxLimitValue={currentMaxValue}

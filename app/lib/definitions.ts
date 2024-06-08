@@ -4,6 +4,7 @@ export type RangeProps = {
 }
 
 export type EditableValueProps = {
+  justifySelfRight?: boolean
   currentValue: number
   maximumValue: number
   maxLimitValue: number

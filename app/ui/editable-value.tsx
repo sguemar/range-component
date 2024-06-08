@@ -5,6 +5,7 @@ import { EditableValueProps } from '@/lib/definitions'
 import styles from '@/ui/editable-value.module.css'
 
 export const EditableValue = ({
+  justifySelfRight = false,
   currentValue,
   maximumValue,
   maxLimitValue,
@@ -50,7 +51,10 @@ export const EditableValue = ({
   return (
     <>
       {!isEditingValue ? (
-        <label className={styles.label} onClick={handleClickLabel}>
+        <label
+          className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
+          onClick={handleClickLabel}
+        >
           {currentValue}€
         </label>
       ) : (
