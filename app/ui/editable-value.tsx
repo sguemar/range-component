@@ -2,6 +2,8 @@ import { FormEvent, useState } from 'react'
 
 import { EditableValueProps } from '@/lib/definitions'
 
+import styles from '@/ui/editable-value.module.css'
+
 export const EditableValue = ({
   currentValue,
   maximumValue,
@@ -48,7 +50,9 @@ export const EditableValue = ({
   return (
     <>
       {!isEditingValue ? (
-        <label onClick={handleClickLabel}>{currentValue}€</label>
+        <label className={styles.label} onClick={handleClickLabel}>
+          {currentValue}€
+        </label>
       ) : (
         <div>
           <input
