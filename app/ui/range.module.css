@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.label {
+  cursor: pointer;
+}
+
 .minValue {
   justify-self: end;
   font-size: 30px;

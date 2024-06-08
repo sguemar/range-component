@@ -64,7 +64,10 @@ export const Range = (props: RangeProps) => {
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
       {!isEditingMinValue ? (
-        <label className={styles.minValue} onClick={handleClickMinLabel}>
+        <label
+          className={`${styles.minValue} ${styles.label}`}
+          onClick={handleClickMinLabel}
+        >
           {currentMinValue}€
         </label>
       ) : (
