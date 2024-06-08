@@ -1,13 +1,36 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
 
 import { BulletProps } from '@/lib/definitions'
+import { limitBulletPosition } from '@/lib/utils'
+
+import styles from '@/ui/bullet.module.css'
 
 export const Bullet = ({
-  startPosition,
+  currentPercentage,
+  maximumPosition,
+  maximumValue,
+  minimumPosition,
+  minimumValue,
+  rangeLineLeftOffset,
+  rangeLineLength,
   updatePercentage,
   updateValue,
 }: BulletProps) => {
   const [isMouseDown, setIsMouseDown] = useState(false)
+
+  const getPositionPercentage = (
+    bulletPosition: number,
+    rangeLineLength: number,
+  ) => (bulletPosition * 100) / rangeLineLength
+
+  const getNewValue = useCallback(
+    (bulletPercentage: number) => {
+      const newValue =
+        ((maximumValue - minimumValue) * bulletPercentage) / 100 + minimumValue
+      return Number(newValue.toFixed(2))
+    },
+    [maximumValue, minimumValue],
+  )
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -16,18 +39,43 @@ export const Bullet = ({
 
   const handleMouseMove = useCallback(
     (e) => {
-      updatePercentage(1)
-      updateValue(1)
+      const limitedBulletPosition = limitBulletPosition({
+        current: e.clientX - rangeLineLeftOffset,
+        max: maximumPosition,
+        min: minimumPosition,
+      })
+
+      const newPercentage = getPositionPercentage(
+        limitedBulletPosition,
+        rangeLineLength,
+      )
+      updatePercentage(newPercentage)
+
+      updateValue(getNewValue(newPercentage))
     },
-    [updatePercentage, updateValue],
+    [
+      updatePercentage,
+      updateValue,
+      getNewValue,
+      maximumPosition,
+      minimumPosition,
+      rangeLineLength,
+      rangeLineLeftOffset,
+    ],
   )
+
+  const handleMouseUp = () => {
+    setIsMouseDown(false)
+  }
 
   useEffect(() => {
     if (isMouseDown) {
+      document.addEventListener('mouseup', handleMouseUp)
       document.addEventListener('mousemove', handleMouseMove)
     }
     return () => {
       if (isMouseDown) {
+        document.removeEventListener('mouseup', handleMouseUp)
         document.removeEventListener('mousemove', handleMouseMove)
       }
     }
@@ -35,11 +83,12 @@ export const Bullet = ({
 
   return (
     <div
+      className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
       data-testid="bullet"
-      style={{
-        left: `${startPosition}%`,
-      }}
       onMouseDown={handleMouseDown}
+      style={{
+        left: `${currentPercentage}%`,
+      }}
     ></div>
   )
 }
