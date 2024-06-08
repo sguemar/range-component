@@ -58,14 +58,18 @@ export const EditableValue = ({
           {currentValue}€
         </label>
       ) : (
-        <div>
+        <div className={styles.inputContainer}>
           <input
+            className={styles.input}
             onBlur={handleValueBlur}
             onChange={handleValueChange}
             type="number"
             value={currentValue}
           />
-          {isInvalidValue && <p>Invalid value</p>}
+          <span className={styles.currencySymbol}>€</span>
+          {isInvalidValue && (
+            <p className={styles.errorMessage}>Invalid value</p>
+          )}
         </div>
       )}
     </>

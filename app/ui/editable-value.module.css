@@ -6,3 +6,25 @@
 .justifySelfRight {
   justify-self: right;
 }
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 20px;
+}
+
+.input {
+  max-width: 100%;
+}
+
+.currencySymbol {
+  font-size: 30px;
+}
+
+.errorMessage {
+  color: red;
+  position: absolute;
+  top: 20px;
+}
