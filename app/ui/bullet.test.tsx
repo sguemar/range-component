@@ -13,7 +13,13 @@ describe('Bullet', () => {
   })
 
   const defaultProps: BulletProps = {
-    startPosition: 0,
+    currentPercentage: 0,
+    maximumPosition: 500,
+    maximumValue: 5,
+    minimumPosition: 0,
+    minimumValue: 1,
+    rangeLineLeftOffset: 100,
+    rangeLineLength: 500,
     updatePercentage,
     updateValue,
   }
@@ -38,23 +44,23 @@ describe('Bullet', () => {
     })
 
     it('should be placed at 67% on the first render', () => {
-      const startPosition = 67
+      const currentPercentage = 67
 
-      setup({ startPosition })
+      setup({ currentPercentage })
 
       const minBullet = screen.getByTestId('bullet')
 
-      expect(minBullet.style.left).toBe(`${startPosition}%`)
+      expect(minBullet.style.left).toBe(`${currentPercentage}%`)
     })
 
     it('should be placed at 100% on the first render', () => {
-      const startPosition = 100
+      const currentPercentage = 100
 
-      setup({ startPosition })
+      setup({ currentPercentage })
 
       const minBullet = screen.getByTestId('bullet')
 
-      expect(minBullet.style.left).toBe(`${startPosition}%`)
+      expect(minBullet.style.left).toBe(`${currentPercentage}%`)
     })
   })
 
