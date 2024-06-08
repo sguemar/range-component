@@ -1,0 +1,21 @@
+.bullet {
+  background-color: black;
+  border-radius: 10px;
+  height: 20px;
+  position: absolute;
+  width: 20px;
+  top: -5px;
+  transform: translateX(-50%);
+}
+
+.bullet:hover {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  top: -10px;
+  cursor: grab;
+}
+
+.bullet.grabbing {
+  cursor: grabbing;
+}
