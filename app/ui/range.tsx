@@ -14,6 +14,8 @@ export const Range = (props: RangeProps) => {
   const [currentMinValue, setCurrentMinValue] = useState(props.min)
   const [currentMaxValue, setCurrentMaxValue] = useState(props.max)
 
+  const [isEditingMinValue, setIsEditingMinValue] = useState(false)
+
   const [rangeLineBounds, setRangeLineBounds] = useState<RangeLineBounds>({
     left: 0,
     right: 0,
@@ -55,9 +57,19 @@ export const Range = (props: RangeProps) => {
     setCurrentMaxValue(newValue)
   }
 
+  const handleClickMinLabel = () => {
+    setIsEditingMinValue(true)
+  }
+
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
-      <label className={styles.minValue}>{currentMinValue}€</label>
+      {!isEditingMinValue ? (
+        <label className={styles.minValue} onClick={handleClickMinLabel}>
+          {currentMinValue}€
+        </label>
+      ) : (
+        <input type="number" />
+      )}
       <div ref={rangeLineRef} className={styles.rangeLine}>
         <Bullet
           currentPercentage={minBulletPercentage}
