@@ -3,6 +3,18 @@ export type RangeProps = {
   max: number
 }
 
+export type EditableValueProps = {
+  currentValue: number
+  maximumValue: number
+  maxLimitValue: number
+  minimumValue: number
+  minLimitValue: number
+  resetInputValue: () => void
+  updateBulletPercentage: (newPercentage: number) => void
+  updateBulletValue: (newValue: number) => void
+  updateCurrentInputValue: (newValue: number) => void
+}
+
 export type BulletProps = {
   currentPercentage: number
   maximumPosition: number
