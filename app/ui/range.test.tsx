@@ -60,7 +60,7 @@ describe('Range component', () => {
     expect(minBullet.style.left).toBe('100%')
   })
 
-  it('should hide the min value label and show an input when clicking on the label', () => {
+  it('should hide the min value label and show an input with the current min value when clicking on the label', () => {
     setup({})
 
     const minValueText = `${defaultProps.min}€`
@@ -76,5 +76,9 @@ describe('Range component', () => {
     const minValueInput = screen.getByRole('spinbutton')
 
     expect(minValueInput).toBeDefined()
+
+    const value = Number(minValueInput.getAttribute('value'))
+
+    expect(value).toBe(defaultProps.min)
   })
 })
