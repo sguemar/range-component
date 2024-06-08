@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, test } from 'vitest'
 
 import { Range } from '@/ui/range'
 import { RangeProps } from '@/lib/definitions'
@@ -36,35 +36,27 @@ describe('Range component', () => {
     expect(screen.getByText(`${defaultProps.max}€`)).toBeDefined()
   })
 
-  describe('Min bullet', () => {
-    it('should render a bullet element to select the minimum value', () => {
-      setup({})
+  it('should render two bullet elements', () => {
+    setup({})
 
-      expect(screen.getByTestId('min-bullet')).toBeDefined()
-    })
-
-    it('should be placed at the start position on the first render', () => {
-      setup({})
-
-      const minBullet = screen.getByTestId('min-bullet')
-
-      expect(minBullet.style.left).toBe('0%')
-    })
+    expect(screen.getAllByTestId('bullet')).toHaveLength(2)
   })
 
-  describe('Max bullet', () => {
-    it('should render a bullet element to select the maximum value', () => {
-      setup({})
+  test('the min bullet should be placed at the start position on the first render', () => {
+    setup({})
 
-      expect(screen.getByTestId('max-bullet')).toBeDefined()
-    })
+    const bullets = screen.getAllByTestId('bullet')
+    const minBullet = bullets[0]
 
-    it('should be placed at the end position on the first render', () => {
-      setup({})
+    expect(minBullet.style.left).toBe('0%')
+  })
 
-      const max = screen.getByTestId('max-bullet')
+  test('the max bullet should be placed at the end position on the first render', () => {
+    setup({})
 
-      expect(max.style.left).toBe('100%')
-    })
+    const bullets = screen.getAllByTestId('bullet')
+    const minBullet = bullets[1]
+
+    expect(minBullet.style.left).toBe('100%')
   })
 })
