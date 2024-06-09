@@ -25,7 +25,7 @@ export default function NormalRange() {
   return (
     <>
       <h2>Normal Range</h2>
-      {!isLoading && <Range max={data.max} min={data.min} />}
+      {isLoading ? <p>Loading...</p> : <Range max={data.max} min={data.min} />}
     </>
   )
 }
