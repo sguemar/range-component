@@ -1,6 +1,7 @@
 export type RangeProps = {
-  min: number
-  max: number
+  min?: number
+  max?: number
+  valueRange?: Array<number>
 }
 
 export type NormalRangeData = {
