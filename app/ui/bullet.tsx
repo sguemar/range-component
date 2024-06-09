@@ -27,7 +27,11 @@ export const Bullet = ({
   const getNewValue = useCallback(
     (bulletPercentage: number) => {
       if (fixedValues) {
-        const index = Math.floor(bulletPercentage / (100 / fixedValues.length))
+        const numberOfFixedValues = fixedValues.length
+        const index = Math.min(
+          numberOfFixedValues - 1,
+          Math.floor(bulletPercentage / (100 / numberOfFixedValues)),
+        )
         return fixedValues[index]
       }
       const newValue =

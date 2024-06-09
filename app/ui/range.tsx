@@ -89,7 +89,14 @@ export const Range = (props: RangeProps) => {
   }
 
   const getMaxBulletMinPosition = () => {
-    return (minBulletPercentage * rangeLineLength) / 100 + 1
+    if (rangeMode === RangeModes.Normal) {
+      return (minBulletPercentage * rangeLineLength) / 100 + 1
+    } else {
+      const minAllowedPercentage =
+        (100 / props.valueRange.length) *
+        (props.valueRange.indexOf(currentMinValue) + 1)
+      return (minAllowedPercentage * rangeLineLength) / 100 + 1
+    }
   }
 
   const updateMaxBulletPercentage = (newPercentage: number) => {
@@ -139,6 +146,7 @@ export const Range = (props: RangeProps) => {
         />
         <Bullet
           currentPercentage={maxBulletPercentage}
+          fixedValues={props.valueRange}
           maximumPosition={rangeLineLength}
           maximumValue={props.max}
           minimumPosition={getMaxBulletMinPosition()}
