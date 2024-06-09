@@ -1,0 +1,15 @@
+.links {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.link {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 1rem;
+  text-decoration: none;
+  background-color: cornflowerblue;
+  font-weight: bold;
+  color: black;
+}
