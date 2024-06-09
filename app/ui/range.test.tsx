@@ -9,7 +9,7 @@ describe('Range component', () => {
     cleanup()
   })
 
-  const defaultProps = {
+  const defaultProps: RangeProps = {
     min: 1,
     max: 5,
   }
@@ -143,6 +143,64 @@ describe('Range component', () => {
       const maxBullet = bullets[0]
 
       expect(maxBullet.style.left).toBe('0%')
+    })
+  })
+
+  describe('Invalid props', () => {
+    it.only('should render an error message if all props are undefined', () => {
+      setup({
+        max: undefined,
+        min: undefined,
+        valueRange: undefined,
+      })
+
+      const errorMessage = screen.getByRole('paragraph')
+
+      expect(errorMessage).toBeDefined()
+      expect(errorMessage.textContent).toBe('Invalid props')
+      expect(screen.queryByTestId('range-container')).toBeNull()
+    })
+
+    it('should render an error message if only the max prop is passed', () => {
+      setup({
+        max: 100,
+        min: undefined,
+        valueRange: undefined,
+      })
+
+      const errorMessage = screen.getByRole('paragraph')
+
+      expect(errorMessage).toBeDefined()
+      expect(errorMessage.textContent).toBe('Invalid props')
+      expect(screen.queryByTestId('range-container')).toBeNull()
+    })
+
+    it('should render an error message if only the min prop is passed', () => {
+      setup({
+        max: undefined,
+        min: 0,
+        valueRange: undefined,
+      })
+
+      const errorMessage = screen.getByRole('paragraph')
+
+      expect(errorMessage).toBeDefined()
+      expect(errorMessage.textContent).toBe('Invalid props')
+      expect(screen.queryByTestId('range-container')).toBeNull()
+    })
+
+    it('should render an error message if all props are passed', () => {
+      setup({
+        max: 100,
+        min: 0,
+        valueRange: [1, 2, 3],
+      })
+
+      const errorMessage = screen.getByRole('paragraph')
+
+      expect(errorMessage).toBeDefined()
+      expect(errorMessage.textContent).toBe('Invalid props')
+      expect(screen.queryByTestId('range-container')).toBeNull()
     })
   })
 })
