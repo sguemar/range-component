@@ -33,6 +33,19 @@ export const Range = (props: RangeProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (props.valueRange !== undefined) {
+      const minValue = props.valueRange[0]
+      setCurrentMinValue(minValue)
+      setMinInputValue(minValue)
+
+      const numberOfValues = props.valueRange.length
+      const maxValue = props.valueRange[numberOfValues - 1]
+      setCurrentMaxValue(maxValue)
+      setMaxInputValue(maxValue)
+    }
+  }, [props.valueRange])
+
   const rangeLineLength = useMemo(() => {
     const { left, right } = rangeLineBounds
     return right - left
