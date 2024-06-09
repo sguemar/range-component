@@ -11,10 +11,12 @@ export default function NormalRange() {
     max: 0,
     min: 0,
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getData = async () => {
       const data = await getNormalRangeData()
+      setIsLoading(false)
       setData(data)
     }
     getData()
@@ -23,7 +25,7 @@ export default function NormalRange() {
   return (
     <>
       <h2>Normal Range</h2>
-      <Range max={data.max} min={data.min} />
+      {!isLoading && <Range max={data.max} min={data.min} />}
     </>
   )
 }
