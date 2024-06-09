@@ -150,6 +150,18 @@ describe('Utils', () => {
       expect(isValid).toBe(false)
     })
 
+    it('should return false if the value range prop is an empty array', () => {
+      const isValid = isRangePropsValid({ valueRange: [] })
+
+      expect(isValid).toBe(false)
+    })
+
+    it('should return false if the value range prop has only one element', () => {
+      const isValid = isRangePropsValid({ valueRange: [1] })
+
+      expect(isValid).toBe(false)
+    })
+
     it('should return true if it receives a min and a max values but no range of values', () => {
       const isValid = isRangePropsValid({ min: 0, max: 10 })
 
