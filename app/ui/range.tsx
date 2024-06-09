@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { Bullet } from '@/ui/bullet'
 import { EditableValue } from '@/ui/editable-value'
+import { isRangePropsValid } from '@/lib/utils'
 import { RangeLineBounds, RangeProps } from '@/lib/definitions'
 
 import styles from '@/ui/range.module.css'
@@ -26,14 +27,20 @@ export const Range = (props: RangeProps) => {
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const rect = rangeLineRef.current.getBoundingClientRect()
-    setRangeLineBounds({ left: rect.left, right: rect.right })
+    if (rangeLineRef && rangeLineRef.current) {
+      const rect = rangeLineRef.current.getBoundingClientRect()
+      setRangeLineBounds({ left: rect.left, right: rect.right })
+    }
   }, [])
 
   const rangeLineLength = useMemo(() => {
     const { left, right } = rangeLineBounds
     return right - left
   }, [rangeLineBounds])
+
+  if (!isRangePropsValid({ ...props })) {
+    return <p>Invalid props</p>
+  }
 
   const getMinBulletMaxPosition = () => {
     return (maxBulletPercentage * rangeLineLength) / 100 - 1
