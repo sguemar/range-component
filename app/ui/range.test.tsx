@@ -147,7 +147,7 @@ describe('Range component', () => {
   })
 
   describe('Invalid props', () => {
-    it.only('should render an error message if all props are undefined', () => {
+    it('should render an error message if all props are undefined', () => {
       setup({
         max: undefined,
         min: undefined,
