@@ -3,7 +3,7 @@ export type RangeProps = {
   max: number
 }
 
-export type NormalRangeResponse = {
+export type NormalRangeData = {
   max: number
   min: number
 }

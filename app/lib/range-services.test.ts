@@ -2,11 +2,11 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { BASE_API_URL, NORMAL_RANGE_ENDPOINT } from '@/lib/endpoints'
 import { getNormalRangeData } from '@/lib/range-services'
-import { NormalRangeResponse } from '@/lib/definitions'
+import { NormalRangeData } from '@/lib/definitions'
 
 const fetchSpy = vi.spyOn(global, 'fetch')
 
-const mockData: NormalRangeResponse = {
+const mockData: NormalRangeData = {
   min: 1,
   max: 100,
 }

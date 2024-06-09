@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 
 import { getNormalRangeData } from '@/lib/range-services'
-import { NormalRangeResponse } from '@/lib/definitions'
+import { NormalRangeData } from '@/lib/definitions'
 import { Range } from '@/ui/range'
 
 export default function NormalRange() {
-  const [data, setData] = useState<NormalRangeResponse>({
+  const [data, setData] = useState<NormalRangeData>({
     max: 0,
     min: 0,
   })
