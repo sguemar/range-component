@@ -181,6 +181,37 @@ describe('Range component', () => {
 
       expect(maxLabel).toBeDefined()
     })
+
+    it('should not display an input when clicking on the min label', async () => {
+      setup({})
+
+      expect(screen.queryByRole('spinbutton')).toBeNull()
+
+      const minLabel = await screen.findByText(`${defaultProps.valueRange[0]}€`)
+
+      expect(minLabel).toBeDefined()
+
+      fireEvent.click(minLabel)
+
+      expect(screen.queryByRole('spinbutton')).toBeNull()
+    })
+
+    it('should not display an input when clicking on the max label', async () => {
+      setup({})
+
+      expect(screen.queryByRole('spinbutton')).toBeNull()
+
+      const numberOfValues = defaultProps.valueRange.length
+      const maxLabel = await screen.findByText(
+        `${defaultProps.valueRange[numberOfValues - 1]}€`,
+      )
+
+      expect(maxLabel).toBeDefined()
+
+      fireEvent.click(maxLabel)
+
+      expect(screen.queryByRole('spinbutton')).toBeNull()
+    })
   })
 
   describe('Invalid props', () => {
