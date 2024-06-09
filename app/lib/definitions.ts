@@ -9,6 +9,10 @@ export type NormalRangeData = {
   min: number
 }
 
+export type FixedValuesRangeData = {
+  valueRange: Array<number>
+}
+
 export type EditableValueProps = {
   currentValue: number
   fixedMode: boolean
