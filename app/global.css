@@ -7,11 +7,15 @@ body {
   height: 100vh;
   background-color: #bbb;
   display: grid;
-  grid-template-rows: 200px 1fr;
+  grid-template-rows: min-content 1fr;
   padding: 15% 10%;
   place-items: center;
 
   h1 {
     font-size: 50px;
+  }
+
+  h2 {
+    font-size: 35px;
   }
 }
