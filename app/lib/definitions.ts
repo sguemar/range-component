@@ -3,6 +3,11 @@ export type RangeProps = {
   max: number
 }
 
+export type NormalRangeResponse = {
+  max: number
+  min: number
+}
+
 export type EditableValueProps = {
   justifySelfRight?: boolean
   currentValue: number
