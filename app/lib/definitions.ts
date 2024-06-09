@@ -10,8 +10,9 @@ export type NormalRangeData = {
 }
 
 export type EditableValueProps = {
-  justifySelfRight?: boolean
   currentValue: number
+  fixedMode: boolean
+  justifySelfRight?: boolean
   maximumValue: number
   maxLimitValue: number
   minimumValue: number

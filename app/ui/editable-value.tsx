@@ -5,14 +5,15 @@ import { EditableValueProps } from '@/lib/definitions'
 import styles from '@/ui/editable-value.module.css'
 
 export const EditableValue = ({
-  justifySelfRight = false,
   currentValue,
+  fixedMode,
+  justifySelfRight = false,
   maximumValue,
   maxLimitValue,
   minimumValue,
   minLimitValue,
-  updateBulletPercentage,
   resetInputValue,
+  updateBulletPercentage,
   updateBulletValue,
   updateCurrentInputValue,
 }: EditableValueProps) => {
@@ -46,6 +47,17 @@ export const EditableValue = ({
       updateBulletValue(Number(currentValue.toFixed(2)))
       updateBulletPercentage(getPercentageByValue(currentValue))
     }
+  }
+
+  if (fixedMode) {
+    return (
+      <label
+        className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
+        onClick={handleClickLabel}
+      >
+        {currentValue}€
+      </label>
+    )
   }
 
   return (
