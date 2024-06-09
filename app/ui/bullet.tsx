@@ -7,6 +7,7 @@ import styles from '@/ui/bullet.module.css'
 
 export const Bullet = ({
   currentPercentage,
+  fixedValues,
   maximumPosition,
   maximumValue,
   minimumPosition,
@@ -25,11 +26,15 @@ export const Bullet = ({
 
   const getNewValue = useCallback(
     (bulletPercentage: number) => {
+      if (fixedValues) {
+        const index = Math.floor(bulletPercentage / (100 / fixedValues.length))
+        return fixedValues[index]
+      }
       const newValue =
         ((maximumValue - minimumValue) * bulletPercentage) / 100 + minimumValue
       return Number(newValue.toFixed(2))
     },
-    [maximumValue, minimumValue],
+    [maximumValue, minimumValue, fixedValues],
   )
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {

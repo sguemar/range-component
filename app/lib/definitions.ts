@@ -25,6 +25,7 @@ export type EditableValueProps = {
 
 export type BulletProps = {
   currentPercentage: number
+  fixedValues?: Array<number>
   maximumPosition: number
   maximumValue: number
   minimumPosition: number
