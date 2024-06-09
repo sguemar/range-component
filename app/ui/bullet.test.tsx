@@ -10,6 +10,7 @@ describe('Bullet', () => {
 
   afterEach(() => {
     cleanup()
+    vi.clearAllMocks()
   })
 
   const defaultProps: BulletProps = {
@@ -74,6 +75,25 @@ describe('Bullet', () => {
     fireEvent.mouseMove(minBullet, {
       clientX: 50,
     })
+
+    fireEvent.mouseUp(minBullet)
+
+    expect(updatePercentage).toHaveBeenCalledOnce()
+    expect(updateValue).toHaveBeenCalledOnce()
+  })
+
+  it('should call the updatePercentage and updateValue functions when the user moves the bullet in fixed mode', () => {
+    setup({ fixedValues: [1, 2, 3, 4] })
+
+    const minBullet = screen.getByTestId('bullet')
+
+    fireEvent.mouseDown(minBullet)
+
+    fireEvent.mouseMove(minBullet, {
+      clientX: 50,
+    })
+
+    fireEvent.mouseUp(minBullet)
 
     expect(updatePercentage).toHaveBeenCalledOnce()
     expect(updateValue).toHaveBeenCalledOnce()
