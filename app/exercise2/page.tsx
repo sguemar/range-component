@@ -10,10 +10,12 @@ export default function FixedValuesRange() {
   const [data, setData] = useState<FixedValuesRangeData>({
     valueRange: [],
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getData = async () => {
       const data = await getFixedValuesRangeData()
+      setIsLoading(false)
       setData(data)
     }
     getData()
@@ -22,7 +24,7 @@ export default function FixedValuesRange() {
   return (
     <>
       <h2>Fixed values Range</h2>
-      <Range valueRange={data.valueRange} />
+      {isLoading ? <p>Loading...</p> : <Range valueRange={data.valueRange} />}
     </>
   )
 }
