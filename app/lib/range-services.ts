@@ -1,7 +1,9 @@
-import { NormalRangeResponse } from './definitions'
+import { NormalRangeResponse } from '@/lib/definitions'
+import { BASE_API_URL, NORMAL_RANGE_ENDPOINT } from '@/lib/endpoints'
 
 export const getNormalRangeData = async (): Promise<NormalRangeResponse> => {
-  const response = await fetch('http://demo8836791.mockable.io/normal-range')
+  const endpoint = `${BASE_API_URL}${NORMAL_RANGE_ENDPOINT}`
+  const response = await fetch(endpoint)
   const data = await response.json()
   return {
     min: data.min,

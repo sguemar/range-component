@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { BASE_API_URL, NORMAL_RANGE_ENDPOINT } from '@/lib/endpoints'
 import { getNormalRangeData } from '@/lib/range-services'
 import { NormalRangeResponse } from '@/lib/definitions'
 
@@ -18,9 +19,8 @@ describe('Range services', () => {
 
     const rangeData = await getNormalRangeData()
 
-    expect(fetchSpy).toHaveBeenCalledWith(
-      'http://demo8836791.mockable.io/normal-range',
-    )
+    const endpoint = `${BASE_API_URL}${NORMAL_RANGE_ENDPOINT}`
+    expect(fetchSpy).toHaveBeenCalledWith(endpoint)
 
     expect(rangeData).toEqual(mockData)
   })
