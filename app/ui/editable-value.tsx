@@ -51,7 +51,7 @@ export const EditableValue = ({
 
   const label = (
     <label
-      className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
+      className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''} ${!fixedMode ? styles.cursorPointer : ''}`}
       onClick={handleClickLabel}
     >
       {currentValue}€

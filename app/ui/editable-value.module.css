@@ -1,6 +1,9 @@
 .label {
-  cursor: pointer;
   font-size: 30px;
+}
+
+.cursorPointer {
+  cursor: pointer;
 }
 
 .justifySelfRight {
