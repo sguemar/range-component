@@ -6,6 +6,7 @@ import { Bullet } from '@/ui/bullet'
 import { EditableValue } from '@/ui/editable-value'
 import { isRangePropsValid } from '@/lib/utils'
 import { RangeLineBounds, RangeProps } from '@/lib/definitions'
+import { RangeModes } from '@/lib/enums'
 
 import styles from '@/ui/range.module.css'
 
@@ -24,6 +25,8 @@ export const Range = (props: RangeProps) => {
     right: 0,
   })
 
+  const [rangeMode, setRangeMode] = useState<RangeModes>(RangeModes.Normal)
+
   const rangeLineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -35,6 +38,8 @@ export const Range = (props: RangeProps) => {
 
   useEffect(() => {
     if (props.valueRange !== undefined) {
+      setRangeMode(RangeModes.Fixed)
+
       const minValue = props.valueRange[0]
       setCurrentMinValue(minValue)
       setMinInputValue(minValue)
@@ -100,8 +105,9 @@ export const Range = (props: RangeProps) => {
   return (
     <div className={styles.rangeContainer} data-testid="range-container">
       <EditableValue
-        justifySelfRight
         currentValue={minInputValue}
+        fixedMode={rangeMode === RangeModes.Fixed}
+        justifySelfRight
         maximumValue={props.max}
         maxLimitValue={currentMaxValue}
         minimumValue={props.min}
@@ -123,7 +129,6 @@ export const Range = (props: RangeProps) => {
           updatePercentage={updateMinBulletPercentage}
           updateValue={updateMinBulletValue}
         />
-
         <Bullet
           currentPercentage={maxBulletPercentage}
           maximumPosition={rangeLineLength}
@@ -138,6 +143,7 @@ export const Range = (props: RangeProps) => {
       </div>
       <EditableValue
         currentValue={maxInputValue}
+        fixedMode={rangeMode === RangeModes.Fixed}
         maximumValue={props.max}
         maxLimitValue={props.max}
         minimumValue={props.min}
