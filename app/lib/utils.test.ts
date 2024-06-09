@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { limitBulletPosition } from '@/lib/utils'
+import { isRangePropsValid, limitBulletPosition } from '@/lib/utils'
 
 describe('Utils', () => {
   describe('limitBulletPosition', () => {
@@ -101,6 +101,65 @@ describe('Utils', () => {
           min: minimumPosition,
         }),
       ).toBe(currentPosition)
+    })
+  })
+  describe('isRangePropsValid', () => {
+    it('should receive the Range component props and return a boolean', () => {
+      const min = 0
+      const max = 500
+      const valueRange = [1, 2, 3, 4]
+
+      const isValid = isRangePropsValid({
+        min,
+        max,
+        valueRange,
+      })
+
+      expect(typeof isValid).toBe('boolean')
+    })
+
+    it('should return false if all the props have values', () => {
+      const min = 0
+      const max = 500
+      const valueRange = [1, 2, 3, 4]
+
+      const isValid = isRangePropsValid({
+        min,
+        max,
+        valueRange,
+      })
+
+      expect(isValid).toBe(false)
+    })
+
+    it('should return false if all props are undefined', () => {
+      const isValid = isRangePropsValid({})
+
+      expect(isValid).toBe(false)
+    })
+
+    it('should return false if there is a min value but not a max value', () => {
+      const isValid = isRangePropsValid({ min: 0 })
+
+      expect(isValid).toBe(false)
+    })
+
+    it('should return false if there is a max value but not a min value', () => {
+      const isValid = isRangePropsValid({ max: 10 })
+
+      expect(isValid).toBe(false)
+    })
+
+    it('should return true if it receives a min and a max values but no range of values', () => {
+      const isValid = isRangePropsValid({ min: 0, max: 10 })
+
+      expect(isValid).toBe(true)
+    })
+
+    it('should return true if it receives a range of values but no max or min values', () => {
+      const isValid = isRangePropsValid({ valueRange: [1, 2, 3, 4] })
+
+      expect(isValid).toBe(true)
     })
   })
 })
