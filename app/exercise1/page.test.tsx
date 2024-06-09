@@ -3,10 +3,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import NormalRange from '@/exercise1/page'
 
-vi.mock('@/lib/range-services', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/lib/range-services')>()
+const { getNormalRangeData } = vi.hoisted(() => {
   return {
-    ...mod,
     getNormalRangeData: vi.fn().mockResolvedValue({
       min: 1,
       max: 100,
@@ -14,18 +12,37 @@ vi.mock('@/lib/range-services', async (importOriginal) => {
   }
 })
 
+vi.mock('@/lib/range-services', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('@/lib/range-services')>()
+  return {
+    ...mod,
+    getNormalRangeData,
+  }
+})
+
 describe('Exercise 1', () => {
   it('should render the exercise 1 page with a range component', () => {
     render(<NormalRange />)
 
+    const rangeComponent = screen.findByTestId('range-container')
+
     expect(screen.getByRole('heading', { name: 'Normal Range', level: 2 }))
-    expect(screen.getByTestId('range-container'))
+    expect(rangeComponent).toBeDefined()
   })
 
-  it('should initialize the range values from the API call', () => {
+  it('should initialize the range values from the API call', async () => {
+    const mockData = {
+      min: 8,
+      max: 99,
+    }
+    getNormalRangeData.mockResolvedValue(mockData)
+
     render(<NormalRange />)
 
-    expect(screen.findByText('100€')).toBeDefined()
-    expect(screen.findByText('1€')).toBeDefined()
+    const minValue = await screen.findByText(`${mockData.min}€`)
+    const maxValue = await screen.findByText(`${mockData.max}€`)
+
+    expect(minValue).toBeDefined()
+    expect(maxValue).toBeDefined()
   })
 })
