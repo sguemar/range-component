@@ -49,26 +49,21 @@ export const EditableValue = ({
     }
   }
 
-  if (fixedMode) {
-    return (
-      <label
-        className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
-        onClick={handleClickLabel}
-      >
-        {currentValue}€
-      </label>
-    )
-  }
+  const label = (
+    <label
+      className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
+      onClick={handleClickLabel}
+    >
+      {currentValue}€
+    </label>
+  )
+
+  if (fixedMode) return label
 
   return (
     <>
       {!isEditingValue ? (
-        <label
-          className={`${styles.label} ${justifySelfRight ? styles.justifySelfRight : ''}`}
-          onClick={handleClickLabel}
-        >
-          {currentValue}€
-        </label>
+        label
       ) : (
         <div className={styles.inputContainer}>
           <input
