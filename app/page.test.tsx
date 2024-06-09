@@ -4,9 +4,13 @@ import { render, screen } from '@testing-library/react'
 import Home from '@/page'
 
 describe('Home', () => {
-  it('should render the range component', () => {
+  it('should render the home page', () => {
     render(<Home />)
 
-    expect(screen.getByTestId('range-container')).toBeDefined()
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Choose the Range Mode' }),
+    ).toBeDefined()
+    expect(screen.getByRole('link', { name: 'Normal' })).toBeDefined()
+    expect(screen.getByRole('link', { name: 'Fixed values' })).toBeDefined()
   })
 })
