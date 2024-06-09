@@ -148,6 +148,41 @@ describe('Range component', () => {
     })
   })
 
+  describe('Fixed values mode', () => {
+    const defaultProps: RangeProps = {
+      valueRange: [1, 2, 3, 4],
+    }
+
+    const setup = (props: Partial<RangeProps>) => {
+      render(<Range {...defaultProps} {...props} />)
+    }
+
+    it('should render the Range component successfully', () => {
+      setup({})
+
+      expect(screen.getByTestId('range-container')).toBeDefined()
+    })
+
+    it('should display the min label with the first value of the value range passed by params', async () => {
+      setup({})
+
+      const minLabel = await screen.findByText(`${defaultProps.valueRange[0]}€`)
+
+      expect(minLabel).toBeDefined()
+    })
+
+    it('should display the max label with the last value of the value range passed by params', async () => {
+      setup({})
+
+      const numberOfValues = defaultProps.valueRange.length
+      const maxLabel = await screen.findByText(
+        `${defaultProps.valueRange[numberOfValues - 1]}€`,
+      )
+
+      expect(maxLabel).toBeDefined()
+    })
+  })
+
   describe('Invalid props', () => {
     const setup = (props: Partial<RangeProps>) => {
       render(<Range {...props} />)
