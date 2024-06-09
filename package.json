@@ -4,7 +4,7 @@
   "description": "A React component for selecting ranges of values.",
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
