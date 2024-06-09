@@ -17,6 +17,7 @@ describe('EditableValue', () => {
 
   const defaultProps: EditableValueProps = {
     currentValue: 1,
+    fixedMode: false,
     maximumValue: 5,
     maxLimitValue: 4,
     minimumValue: 1,
@@ -66,6 +67,26 @@ describe('EditableValue', () => {
     const value = Number(input.getAttribute('value'))
 
     expect(value).toBe(defaultProps.currentValue)
+  })
+
+  it('should not display an input when clicking on the label if fixedMode prop is true', () => {
+    setup({ fixedMode: true })
+
+    const valueText = `${defaultProps.currentValue}€`
+
+    expect(screen.queryByRole('spinbutton')).toBeNull()
+
+    const label = screen.getByText(valueText)
+
+    fireEvent.click(label)
+
+    expect(screen.queryByRole('spinbutton')).toBeNull()
+
+    const input = screen.queryByRole('spinbutton')
+
+    expect(input).toBeNull()
+
+    expect(screen.getByText(valueText)).toBeDefined()
   })
 
   it('should call the updateCurrentValue function if the user modifies the value', () => {
