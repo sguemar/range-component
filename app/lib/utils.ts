@@ -17,7 +17,13 @@ export const isRangePropsValid = ({
 }: RangeProps): boolean => {
   if (max !== undefined && min !== undefined && valueRange === undefined)
     return true
-  if (max === undefined && min === undefined && valueRange !== undefined)
+  if (
+    max === undefined &&
+    min === undefined &&
+    valueRange !== undefined &&
+    Array.isArray(valueRange) &&
+    valueRange.length > 1
+  )
     return true
   return false
 }
