@@ -9,114 +9,42 @@ describe('Range component', () => {
     cleanup()
   })
 
-  const defaultProps: RangeProps = {
-    min: 1,
-    max: 5,
-  }
+  describe('Normal mode', () => {
+    const defaultProps: RangeProps = {
+      min: 1,
+      max: 5,
+    }
 
-  const setup = (props: Partial<RangeProps>) => {
-    render(<Range {...defaultProps} {...props} />)
-  }
+    const setup = (props: Partial<RangeProps>) => {
+      render(<Range {...defaultProps} {...props} />)
+    }
 
-  it('should render the Range component successfully', () => {
-    setup({})
-
-    expect(screen.getByTestId('range-container')).toBeDefined()
-  })
-
-  it('should display a label with the min value passed by params', () => {
-    setup({})
-
-    expect(screen.getByText(`${defaultProps.min}€`)).toBeDefined()
-  })
-
-  it('should display a label with the max value passed by params', () => {
-    setup({})
-
-    expect(screen.getByText(`${defaultProps.max}€`)).toBeDefined()
-  })
-
-  it('should render two bullet elements', () => {
-    setup({})
-
-    expect(screen.getAllByTestId('bullet')).toHaveLength(2)
-  })
-
-  test('the min bullet should be placed at the start position on the first render', () => {
-    setup({})
-
-    const bullets = screen.getAllByTestId('bullet')
-    const minBullet = bullets[0]
-
-    expect(minBullet.style.left).toBe('0%')
-  })
-
-  test('the max bullet should be placed at the end position on the first render', () => {
-    setup({})
-
-    const bullets = screen.getAllByTestId('bullet')
-    const minBullet = bullets[1]
-
-    expect(minBullet.style.left).toBe('100%')
-  })
-
-  describe('Manually value editing', () => {
-    it('should update the min bullet after the manual modification', () => {
+    it('should render the Range component successfully', () => {
       setup({})
 
-      let minValueText = `${defaultProps.min}€`
-      let minLabel = screen.getByText(minValueText)
-
-      fireEvent.click(minLabel)
-
-      let minValueInput = screen.getByRole('spinbutton')
-
-      const newValue = 3
-      fireEvent.change(minValueInput, { target: { value: newValue } })
-
-      fireEvent.blur(minValueInput)
-
-      const bullets = screen.getAllByTestId('bullet')
-      const minBullet = bullets[0]
-
-      expect(minBullet.style.left).toBe('50%')
+      expect(screen.getByTestId('range-container')).toBeDefined()
     })
 
-    it('should update the max bullet after the manual modification', () => {
+    it('should display a label with the min value passed by params', () => {
       setup({})
 
-      let maxValueText = `${defaultProps.max}€`
-      let maxLabel = screen.getByText(maxValueText)
-
-      fireEvent.click(maxLabel)
-
-      let maxValueInput = screen.getByRole('spinbutton')
-
-      const newValue = 3
-      fireEvent.change(maxValueInput, { target: { value: newValue } })
-
-      fireEvent.blur(maxValueInput)
-
-      const bullets = screen.getAllByTestId('bullet')
-      const maxBullet = bullets[1]
-
-      expect(maxBullet.style.left).toBe('50%')
+      expect(screen.getByText(`${defaultProps.min}€`)).toBeDefined()
     })
 
-    it('should not update the min bullet if the current input value is invalid', () => {
+    it('should display a label with the max value passed by params', () => {
       setup({})
 
-      let minValueText = `${defaultProps.min}€`
-      let minLabel = screen.getByText(minValueText)
+      expect(screen.getByText(`${defaultProps.max}€`)).toBeDefined()
+    })
 
-      fireEvent.click(minLabel)
+    it('should render two bullet elements', () => {
+      setup({})
 
-      let minValueInput = screen.getByRole('spinbutton')
+      expect(screen.getAllByTestId('bullet')).toHaveLength(2)
+    })
 
-      const newValue = 6
-      fireEvent.change(minValueInput, { target: { value: newValue } })
-
-      fireEvent.blur(minValueInput)
+    test('the min bullet should be placed at the start position on the first render', () => {
+      setup({})
 
       const bullets = screen.getAllByTestId('bullet')
       const minBullet = bullets[0]
@@ -124,29 +52,107 @@ describe('Range component', () => {
       expect(minBullet.style.left).toBe('0%')
     })
 
-    it('should not update the max bullet if the current input value is invalid', () => {
+    test('the max bullet should be placed at the end position on the first render', () => {
       setup({})
 
-      let maxValueText = `${defaultProps.max}€`
-      let maxLabel = screen.getByText(maxValueText)
-
-      fireEvent.click(maxLabel)
-
-      let maxValueInput = screen.getByRole('spinbutton')
-
-      const newValue = 6
-      fireEvent.change(maxValueInput, { target: { value: newValue } })
-
-      fireEvent.blur(maxValueInput)
-
       const bullets = screen.getAllByTestId('bullet')
-      const maxBullet = bullets[0]
+      const minBullet = bullets[1]
 
-      expect(maxBullet.style.left).toBe('0%')
+      expect(minBullet.style.left).toBe('100%')
+    })
+
+    describe('Manually value editing', () => {
+      it('should update the min bullet after the manual modification', () => {
+        setup({})
+
+        let minValueText = `${defaultProps.min}€`
+        let minLabel = screen.getByText(minValueText)
+
+        fireEvent.click(minLabel)
+
+        let minValueInput = screen.getByRole('spinbutton')
+
+        const newValue = 3
+        fireEvent.change(minValueInput, { target: { value: newValue } })
+
+        fireEvent.blur(minValueInput)
+
+        const bullets = screen.getAllByTestId('bullet')
+        const minBullet = bullets[0]
+
+        expect(minBullet.style.left).toBe('50%')
+      })
+
+      it('should update the max bullet after the manual modification', () => {
+        setup({})
+
+        let maxValueText = `${defaultProps.max}€`
+        let maxLabel = screen.getByText(maxValueText)
+
+        fireEvent.click(maxLabel)
+
+        let maxValueInput = screen.getByRole('spinbutton')
+
+        const newValue = 3
+        fireEvent.change(maxValueInput, { target: { value: newValue } })
+
+        fireEvent.blur(maxValueInput)
+
+        const bullets = screen.getAllByTestId('bullet')
+        const maxBullet = bullets[1]
+
+        expect(maxBullet.style.left).toBe('50%')
+      })
+
+      it('should not update the min bullet if the current input value is invalid', () => {
+        setup({})
+
+        let minValueText = `${defaultProps.min}€`
+        let minLabel = screen.getByText(minValueText)
+
+        fireEvent.click(minLabel)
+
+        let minValueInput = screen.getByRole('spinbutton')
+
+        const newValue = 6
+        fireEvent.change(minValueInput, { target: { value: newValue } })
+
+        fireEvent.blur(minValueInput)
+
+        const bullets = screen.getAllByTestId('bullet')
+        const minBullet = bullets[0]
+
+        expect(minBullet.style.left).toBe('0%')
+      })
+
+      it('should not update the max bullet if the current input value is invalid', () => {
+        setup({})
+
+        let maxValueText = `${defaultProps.max}€`
+        let maxLabel = screen.getByText(maxValueText)
+
+        fireEvent.click(maxLabel)
+
+        let maxValueInput = screen.getByRole('spinbutton')
+
+        const newValue = 6
+        fireEvent.change(maxValueInput, { target: { value: newValue } })
+
+        fireEvent.blur(maxValueInput)
+
+        const bullets = screen.getAllByTestId('bullet')
+        const maxBullet = bullets[0]
+
+        expect(maxBullet.style.left).toBe('0%')
+      })
     })
   })
 
   describe('Invalid props', () => {
+    const setup = (props: Partial<RangeProps>) => {
+      render(<Range {...props} />)
+    }
+
     it('should render an error message if all props are undefined', () => {
       setup({
         max: undefined,
