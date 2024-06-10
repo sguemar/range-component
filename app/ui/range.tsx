@@ -90,7 +90,10 @@ export const Range = (props: RangeProps) => {
 
   const getMaxBulletMinPosition = () => {
     if (rangeMode === RangeModes.Normal) {
-      return (minBulletPercentage * rangeLineLength) / 100 + 1
+      return Math.min(
+        (minBulletPercentage * rangeLineLength) / 100 + 1,
+        rangeLineLength,
+      )
     } else {
       const minAllowedPercentage =
         (100 / props.valueRange.length) *
