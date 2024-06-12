@@ -38,6 +38,7 @@ export type BulletProps = {
   rangeLineLength: number
   updatePercentage: (newPercentage: number) => void
   updateValue: (newValue: number) => void
+  zIndex: number
 }
 
 export type LimitBulletPositionParams = {

@@ -146,6 +146,7 @@ export const Range = (props: RangeProps) => {
           rangeLineLength={rangeLineLength}
           updatePercentage={updateMinBulletPercentage}
           updateValue={updateMinBulletValue}
+          zIndex={minBulletPercentage > 50 ? 1 : 0}
         />
         <Bullet
           currentPercentage={maxBulletPercentage}
@@ -158,6 +159,7 @@ export const Range = (props: RangeProps) => {
           rangeLineLength={rangeLineLength}
           updatePercentage={updateMaxBulletPercentage}
           updateValue={updateMaxBulletValue}
+          zIndex={maxBulletPercentage < 50 ? 1 : 0}
         />
       </div>
       <EditableValue

@@ -16,6 +16,7 @@ export const Bullet = ({
   rangeLineLength,
   updatePercentage,
   updateValue,
+  zIndex,
 }: BulletProps) => {
   const [isMouseDown, setIsMouseDown] = useState(false)
 
@@ -97,6 +98,7 @@ export const Bullet = ({
       onMouseDown={handleMouseDown}
       style={{
         left: `${currentPercentage}%`,
+        zIndex,
       }}
     ></div>
   )
