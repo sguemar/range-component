@@ -23,6 +23,7 @@ describe('Bullet', () => {
     rangeLineLength: 500,
     updatePercentage,
     updateValue,
+    zIndex: 0,
   }
 
   const setup = (props: Partial<BulletProps>) => {
