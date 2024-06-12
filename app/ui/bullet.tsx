@@ -42,15 +42,16 @@ export const Bullet = ({
     [maximumValue, minimumValue, fixedValues],
   )
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
+  const handleStartDrag = () => {
     setIsMouseDown(true)
   }
 
-  const handleMouseMove = useCallback(
+  const handleDragMovement = useCallback(
     (e) => {
+      const currentXPointerPosition =
+        e.type === 'touchmove' ? e.touches[0].clientX : e.clientX
       const limitedBulletPosition = limitBulletPosition({
-        current: e.clientX - rangeLineLeftOffset,
+        current: currentXPointerPosition - rangeLineLeftOffset,
         max: maximumPosition,
         min: minimumPosition,
       })
@@ -74,28 +75,35 @@ export const Bullet = ({
     ],
   )
 
-  const handleMouseUp = () => {
+  const handleDragStop = () => {
     setIsMouseDown(false)
   }
 
   useEffect(() => {
     if (isMouseDown) {
-      document.addEventListener('mouseup', handleMouseUp)
-      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseup', handleDragStop)
+      document.addEventListener('mousemove', handleDragMovement)
+
+      document.addEventListener('touchmove', handleDragMovement)
+      document.addEventListener('touchend', handleDragStop)
     }
     return () => {
       if (isMouseDown) {
-        document.removeEventListener('mouseup', handleMouseUp)
-        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleDragStop)
+        document.removeEventListener('mousemove', handleDragMovement)
+
+        document.removeEventListener('touchend', handleDragStop)
+        document.removeEventListener('touchmove', handleDragMovement)
       }
     }
-  }, [handleMouseMove, isMouseDown])
+  }, [handleDragMovement, isMouseDown])
 
   return (
     <div
       className={`${styles.bullet} ${isMouseDown ? styles.grabbing : ''}`}
       data-testid="bullet"
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleStartDrag}
+      onTouchStart={handleStartDrag}
       style={{
         left: `${currentPercentage}%`,
         zIndex,
