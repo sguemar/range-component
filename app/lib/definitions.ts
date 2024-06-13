@@ -51,3 +51,15 @@ export type RangeLineBounds = {
   left: number
   right: number
 }
+
+export type ApiCallHandlerParams<Result> = {
+  service: () => Promise<Result>
+}
+
+export type UseApi = {
+  apiCallHandler: <Result>(
+    params: ApiCallHandlerParams<Result>,
+  ) => Promise<Result>
+  error: string
+  isLoading: boolean
+}
