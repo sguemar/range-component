@@ -24,22 +24,24 @@ describe('Exercise 2', () => {
     cleanup()
   })
 
-  it('should render the exercise 2 page with a range component', () => {
+  it('should render the exercise 2 page with a range component', async () => {
     render(<FixedValuesRange />)
 
     const rangeComponent = screen.findByTestId('range-container')
+    const heading = await screen.findByRole('heading', {
+      name: 'Fixed values Range',
+      level: 2,
+    })
 
-    expect(
-      screen.getByRole('heading', { name: 'Fixed values Range', level: 2 }),
-    )
     expect(rangeComponent).toBeDefined()
+    expect(heading).toBeDefined()
   })
 
   it('should initialize the range values from the API call', async () => {
     const mockData = {
       valueRange: [5, 7.5, 11, 24],
     }
-    getFixedValuesRangeData.mockResolvedValue(mockData)
+    getFixedValuesRangeData.mockResolvedValueOnce(mockData)
 
     render(<FixedValuesRange />)
 
@@ -51,5 +53,16 @@ describe('Exercise 2', () => {
 
     expect(minValue).toBeDefined()
     expect(maxValue).toBeDefined()
+  })
+
+  it('should show an error if the API call fails', async () => {
+    const errorMessage = 'There was an error'
+    getFixedValuesRangeData.mockRejectedValueOnce(errorMessage)
+
+    render(<FixedValuesRange />)
+
+    const errorNode = await screen.findByText(errorMessage)
+
+    expect(errorNode).toBeDefined()
   })
 })
