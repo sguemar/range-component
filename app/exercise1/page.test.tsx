@@ -21,13 +21,17 @@ vi.mock('@/lib/range-services', async (importOriginal) => {
 })
 
 describe('Exercise 1', () => {
-  it('should render the exercise 1 page with a range component', () => {
+  it('should render the exercise 1 page with a range component', async () => {
     render(<NormalRange />)
 
     const rangeComponent = screen.findByTestId('range-container')
+    const heading = await screen.findByRole('heading', {
+      name: 'Normal Range',
+      level: 2,
+    })
 
-    expect(screen.getByRole('heading', { name: 'Normal Range', level: 2 }))
     expect(rangeComponent).toBeDefined()
+    expect(heading).toBeDefined()
   })
 
   it('should initialize the range values from the API call', async () => {
@@ -35,7 +39,7 @@ describe('Exercise 1', () => {
       min: 8,
       max: 99,
     }
-    getNormalRangeData.mockResolvedValue(mockData)
+    getNormalRangeData.mockResolvedValueOnce(mockData)
 
     render(<NormalRange />)
 
@@ -44,5 +48,16 @@ describe('Exercise 1', () => {
 
     expect(minValue).toBeDefined()
     expect(maxValue).toBeDefined()
+  })
+
+  it('should show an error if the API call fails', async () => {
+    const errorMessage = 'There was an error'
+    getNormalRangeData.mockRejectedValueOnce(errorMessage)
+
+    render(<NormalRange />)
+
+    const errorNode = await screen.findByText(errorMessage)
+
+    expect(errorNode).toBeDefined()
   })
 })
