@@ -5,26 +5,34 @@ import { useEffect, useState } from 'react'
 import { getFixedValuesRangeData } from '@/lib/range-services'
 import { FixedValuesRangeData } from '@/lib/definitions'
 import { Range } from '@/ui/range'
+import { useApi } from '@/lib/hooks/useApi'
 
 export default function FixedValuesRange() {
   const [data, setData] = useState<FixedValuesRangeData>({
     valueRange: [],
   })
-  const [isLoading, setIsLoading] = useState(true)
+  const { apiCallHandler, isLoading, error } = useApi()
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getFixedValuesRangeData()
-      setIsLoading(false)
+  const getData = async () => {
+    const data = await apiCallHandler<FixedValuesRangeData>({
+      service: getFixedValuesRangeData,
+    })
+    if (!error) {
       setData(data)
     }
+  }
+
+  useEffect(() => {
     getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (isLoading) return <p>Loading...</p>
 
   return (
     <>
       <h2>Fixed values Range</h2>
-      {isLoading ? <p>Loading...</p> : <Range valueRange={data.valueRange} />}
+      {error ? <p>{error}</p> : <Range valueRange={data.valueRange} />}
     </>
   )
 }
